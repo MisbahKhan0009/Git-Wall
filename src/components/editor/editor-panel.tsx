@@ -32,7 +32,7 @@ const SECTIONS: SectionDef[] = [
 /** Desktop & tablet: a narrow scrollable column of collapsible sections. */
 export function EditorPanel() {
   return (
-    <aside aria-label="Editor" className="scroll-thin relative z-10 hidden w-[320px] shrink-0 overflow-y-auto border-l border-line bg-ink-900 md:block lg:w-[340px]">
+    <aside aria-label="Editor" className="scroll-thin relative z-10 hidden w-[320px] shrink-0 overflow-x-hidden overflow-y-auto border-l border-line bg-ink-900 md:block lg:w-[340px]">
       {SECTIONS.map((s) => (
         <Section key={s.id} id={s.id} title={s.title} icon={s.icon} defaultOpen={s.defaultOpen}>
           {s.render()}

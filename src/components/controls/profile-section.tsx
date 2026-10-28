@@ -66,14 +66,14 @@ function StatusMessage() {
   const status = useEditor((s) => s.status)
   if (status.kind === 'error')
     return (
-      <div role="alert" className="flex gap-2 rounded-lg border border-danger/25 bg-danger/[0.07] p-2.5 text-xs leading-relaxed text-ink-100">
+      <div role="alert" className="flex gap-2 rounded-lg border break-words border-danger/25 bg-danger/[0.07] p-2.5 text-xs leading-relaxed text-ink-100">
         <AlertCircle className="mt-px size-3.5 shrink-0 text-danger" />
         <span>{status.message}</span>
       </div>
     )
   if (status.kind === 'partial')
     return (
-      <div role="status" className="flex gap-2 rounded-lg border border-warn/25 bg-warn/[0.07] p-2.5 text-xs leading-relaxed text-ink-100">
+      <div role="status" className="flex gap-2 rounded-lg border break-words border-warn/25 bg-warn/[0.07] p-2.5 text-xs leading-relaxed text-ink-100">
         <AlertCircle className="mt-px size-3.5 shrink-0 text-warn" />
         <span>{status.message}</span>
       </div>
@@ -111,12 +111,16 @@ function ProfileCard() {
             )}
           </div>
         </div>
-        <div className="text-right">
-          <div className="tabular font-mono text-xs text-ink-50">{data.total.toLocaleString()}</div>
-          <div className="text-2xs text-ink-400">{isSample ? 'sample' : 'last year'}</div>
-        </div>
+        {isSample ? (
+          <span className="rounded-full border border-warn/30 px-2 py-0.5 text-2xs text-warn">Sample</span>
+        ) : (
+          <div className="text-right">
+            <div className="tabular font-mono text-xs text-ink-50">{data.total.toLocaleString()}</div>
+            <div className="text-2xs text-ink-400">last year</div>
+          </div>
+        )}
       </div>
-      <p className="flex items-start gap-1.5 text-2xs leading-relaxed text-ink-400">
+      <p className="flex items-start gap-1.5 text-2xs leading-relaxed break-words text-ink-400">
         <span className={cn('mt-[5px] size-1.5 shrink-0 rounded-full', isSample ? 'bg-warn' : data.source === 'imported' ? 'bg-sky-300' : 'bg-signal')} />
         <span>{data.sourceLabel}</span>
       </p>

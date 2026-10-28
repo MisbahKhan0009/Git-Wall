@@ -53,7 +53,7 @@ export function PresetGallery({ compact }: { compact?: boolean }) {
     return g.type === current.type && g.base === current.base && g.stops.map((s) => s.color).join() === current.stops.map((s) => s.color).join()
   })?.id
   return (
-    <div className={cn('grid gap-2', compact ? 'scroll-thin auto-cols-[112px] grid-flow-col overflow-x-auto pb-1' : 'grid-cols-2')}>
+    <div className={cn('grid gap-2', compact ? 'scroll-thin auto-cols-[112px] grid-flow-col overflow-x-auto pb-1' : 'grid-cols-3')}>
       {PALETTE_PRESETS.map((p) => (
         <button
           key={p.id}
@@ -61,12 +61,12 @@ export function PresetGallery({ compact }: { compact?: boolean }) {
           onClick={() => apply(p.id)}
           aria-pressed={activeId === p.id}
           className={cn(
-            'group grid gap-1.5 rounded-lg border p-1 text-left transition-[border-color,transform] duration-200 hover:-translate-y-px',
+            'group grid gap-1 rounded-lg border p-1 text-left transition-[border-color,transform] duration-200 hover:-translate-y-px',
             activeId === p.id ? 'border-white/60' : 'border-line hover:border-line-strong',
           )}
         >
           <GradientThumb gradient={gradients.get(p.id)!} className="aspect-[16/9] w-full rounded-md" />
-          <span className="truncate px-1 pb-0.5 text-[11px] font-medium text-ink-200 group-hover:text-ink-50">{p.name}</span>
+          <span className="truncate px-0.5 pb-0.5 text-[10.5px] font-medium text-ink-200 group-hover:text-ink-50">{p.name}</span>
         </button>
       ))}
     </div>

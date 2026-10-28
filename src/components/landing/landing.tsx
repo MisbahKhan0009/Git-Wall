@@ -9,7 +9,7 @@ import { PALETTE_PRESETS } from '@/presets/palettes'
 import { applyPalettePreset } from '@/features/gradient-engine/generate'
 import { cn } from '@/lib/cn'
 
-const FEATURED = ['midnight-iris', 'obsidian-aurora', 'peach-nebula', 'deep-ocean', 'solar-flare', 'lavender-haze']
+const FEATURED = ['obsidian-aurora', 'midnight-iris', 'peach-nebula', 'deep-ocean', 'solar-flare', 'lavender-haze']
 
 /** Introductory state: the live wallpaper full-bleed, a headline and the username field. */
 export function Landing() {
@@ -31,15 +31,18 @@ export function Landing() {
     return () => ro.disconnect()
   }, [])
 
-  // cover the viewport while keeping the wallpaper's real aspect ratio
-  const scale = Math.max(size.w / width, size.h / height)
+  // Cover the viewport while keeping the wallpaper's real aspect ratio. In portrait,
+  // the wallpaper covers the upper part so the graph stays clear of the headline.
+  const portrait = size.h > size.w * 1.1
+  const coverH = portrait ? size.h * 0.5 : size.h
+  const scale = Math.max(size.w / width, coverH / height)
   const cw = Math.ceil(width * scale)
   const ch = Math.ceil(height * scale)
 
   return (
     <div ref={ref} className="fixed inset-0 z-30 overflow-hidden bg-ink-950">
       {size.w > 0 && (
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-fade-in">
+        <div className={cn('absolute left-1/2 -translate-x-1/2 animate-fade-in', portrait ? 'top-12 [mask-image:linear-gradient(to_bottom,black_65%,transparent)]' : 'top-1/2 -translate-y-1/2')}>
           <WallpaperPreview cssWidth={cw} cssHeight={ch} />
         </div>
       )}
@@ -74,7 +77,7 @@ export function Landing() {
 
         <div className="grid gap-2.5 animate-rise">
           <span className="font-mono text-2xs tracking-[0.14em] text-white/45 uppercase">Try a style</span>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {featured.map(({ preset, gradient }) => (
               <button
                 key={preset.id}

@@ -58,7 +58,8 @@ export function CanvasStage({ chrome = true }: { chrome?: boolean }) {
   // Fit the wallpaper's aspect ratio inside the stage — never stretched.
   const inset = fullscreen || hideUI ? 0 : avail.w < 640 ? 14 : 40
   const fitW = Math.max(0, avail.w - inset * 2)
-  const fitH = Math.max(0, avail.h - inset * 2 - (chrome && !fullscreen ? 44 : 0))
+  const toolbarSpace = chrome && !fullscreen && !hideUI ? 44 : 0
+  const fitH = Math.max(0, avail.h - inset * 2 - toolbarSpace)
   const fit = Math.min(fitW / width, fitH / height)
   const cssW = Math.floor(width * fit * zoom)
   const cssH = Math.floor(height * fit * zoom)
@@ -74,7 +75,7 @@ export function CanvasStage({ chrome = true }: { chrome?: boolean }) {
     >
       <div
         className={cn('absolute inset-0 flex scroll-thin', overflow ? 'overflow-auto' : 'overflow-hidden')}
-        style={{ padding: inset, paddingBottom: inset + (chrome && !fullscreen ? 44 : 0) }}
+        style={{ padding: inset, paddingBottom: inset + toolbarSpace }}
       >
         <div className="m-auto shrink-0" style={{ width: cssW, height: cssH }}>
           {cssW > 0 && (

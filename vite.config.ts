@@ -9,6 +9,10 @@ import { fileURLToPath, URL } from 'node:url'
 export default defineConfig({
   base: './',
   plugins: [react(), tailwindcss()],
+  build: {
+    // a single ~180 kB (gzip) bundle; splitting it would only add round trips
+    chunkSizeWarningLimit: 800,
+  },
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
   },

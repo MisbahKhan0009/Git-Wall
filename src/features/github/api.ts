@@ -90,7 +90,16 @@ export function parseContributionsResponse(json: unknown): ContributionDay[] {
 export async function fetchContributions(username: string, signal?: AbortSignal): Promise<ContributionData> {
   const name = username.trim()
   if (!isValidUsername(name)) throw new GitHubError('invalid', 'That is not a valid GitHub username.')
-  const res = await request(`https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(name)}?y=last`, signal)
+  const url = `https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(name)}?y=last`
+  let res: Response
+  try {
+    res = await request(url, signal)
+  } catch (err) {
+    // one retry for transient network failures (connection resets, cold starts)
+    if (!(err instanceof GitHubError) || err.kind !== 'network') throw err
+    await new Promise((r) => setTimeout(r, 900))
+    res = await request(url, signal)
+  }
   if (res.status === 404) throw new GitHubError('not-found', `No contribution calendar found for “${name}”.`)
   if (res.status === 429) throw new GitHubError('rate-limited', 'The contribution service is rate limiting requests. Try again in a few seconds.')
   if (!res.ok) throw new GitHubError('unavailable', `The contribution service responded with ${res.status}.`)

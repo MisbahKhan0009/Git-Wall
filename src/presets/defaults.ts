@@ -3,7 +3,7 @@ import { applyPalettePreset } from '@/features/gradient-engine/generate'
 import { PALETTE_PRESETS } from './palettes'
 import { applyAutoGraph } from '@/features/composition/auto-graph'
 
-export const DEFAULT_PRESET_ID = 'midnight-iris'
+export const DEFAULT_PRESET_ID = 'obsidian-aurora'
 
 export const RESOLUTION_PRESETS = [
   { id: '1080p', label: '1920 × 1080', ratio: '16:9', width: 1920, height: 1080 },
@@ -101,17 +101,17 @@ export const BASE_CONFIG: WallpaperConfig = {
     mapping: 'quantile',
   },
   container: {
-    style: 'frosted',
-    color: '#ffffff',
-    opacity: 0.07,
-    blur: 28,
+    style: 'dark',
+    color: '#09090b',
+    opacity: 0.48,
+    blur: 18,
     borderColor: '#ffffff',
-    borderOpacity: 0.18,
+    borderOpacity: 0.08,
     borderWidth: 1,
-    radius: 28,
+    radius: 24,
     padding: 40,
-    shadow: 0.35,
-    highlight: 0.5,
+    shadow: 0.45,
+    highlight: 0.12,
   },
   composition: {
     hAlign: 'center',

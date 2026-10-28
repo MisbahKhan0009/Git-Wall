@@ -40,7 +40,7 @@ export function Section({
         {action}
       </div>
       {isOpen && (
-        <div id={`section-body-${id}`} className="grid gap-4 px-4 pt-0.5 pb-5 animate-fade-in">
+        <div id={`section-body-${id}`} className="grid grid-cols-[minmax(0,1fr)] gap-4 px-4 pt-0.5 pb-5 animate-fade-in">
           {children}
         </div>
       )}
@@ -62,7 +62,7 @@ export function Advanced({ title = 'Advanced', children, defaultOpen = false }: 
         <ChevronRight className={cn('size-3 transition-transform duration-200', open && 'rotate-90')} />
         {title}
       </button>
-      {open && <div className="grid gap-4 px-3 pt-1 pb-3.5 animate-fade-in">{children}</div>}
+      {open && <div className="grid grid-cols-[minmax(0,1fr)] gap-4 px-3 pt-1 pb-3.5 animate-fade-in">{children}</div>}
     </div>
   )
 }
